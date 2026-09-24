@@ -846,6 +846,8 @@
                   href: c.copy.cookiesUrl,
                   target: '_blank',
                   rel: 'noopener noreferrer',
+                  'data-amp-action': 'link',
+                  'data-amp-icmp': c.attribution.icmp.cookies || '',
                   text: c.copy.cookieLinkLabel
                 }
               ),
@@ -855,6 +857,8 @@
                   href: c.copy.privacyUrl,
                   target: '_blank',
                   rel: 'noopener noreferrer',
+                  'data-amp-action': 'link',
+                  'data-amp-icmp': c.attribution.icmp.privacy || '',
                   text: c.copy.privacyLinkLabel
                 }
               )
@@ -892,6 +896,20 @@
           }
 
           const action = button.dataset.ampAction;
+
+          if (action === 'link') {
+            event.preventDefault();
+
+            if (actions.link) {
+              actions.link({
+                href: button.getAttribute('href'),
+                target: button.getAttribute('target'),
+                icmp: button.dataset.ampIcmp || null
+              });
+            }
+
+            return;
+          }
 
           if (action === 'answer') {
             actions.answer &&
@@ -943,6 +961,33 @@
       );
 
       return root;
+    }
+
+    function returnToQuestion() {
+      if (!stepCard || stepCard.hidden) return;
+
+      try {
+        stepCard.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      } catch (_) {
+        const top =
+          stepCard.getBoundingClientRect().top +
+          w.pageYOffset -
+          18;
+
+        w.scrollTo(0, Math.max(0, top));
+      }
+
+      const heading =
+        stepCard.querySelector('#amp-question-title');
+
+      if (heading) {
+        setTimeout(function () {
+          safeFocus(heading);
+        }, 250);
+      }
     }
 
     function showQuiz(step, state, focus) {
@@ -1355,6 +1400,7 @@
       },
       showQuiz: showQuiz,
       showContact: showContact,
+      returnToQuestion: returnToQuestion,
       postcodeError: postcodeError,
       getContact: getContact,
       setErrors: setErrors,
