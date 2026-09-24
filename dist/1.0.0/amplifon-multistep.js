@@ -116,7 +116,7 @@
     assert(c && c.schemaVersion === 1, 'CONFIG_SCHEMA');
     assert(['staging', 'live', 'preview'].includes(c.runtime.mode), 'CONFIG_MODE');
     assert(/^[A-Za-z][A-Za-z0-9_-]*$/.test(c.runtime.rootId), 'CONFIG_ROOT_ID');
-    const topKeys = ['schemaVersion', 'version', 'runtime', 'page', 'release', 'assets', 'theme', 'form', 'validation', 'attribution', 'tracking', 'success', 'funnel', 'copy', 'reviews'];
+    const topKeys = ['schemaVersion', 'version', 'runtime', 'framework', 'page', 'release', 'assets', 'theme', 'form', 'validation', 'attribution', 'tracking', 'success', 'funnel', 'copy', 'reviews'];
     Object.keys(c).forEach(key => assert(topKeys.includes(key), 'CONFIG_UNKNOWN_KEY:' + key));
     assert(typeof c.tracking.consentReader === 'function', 'CONFIG_CONSENT_READER');
     assert(['e164', 'digits', 'national'].includes(c.form.phoneFormat), 'CONFIG_PHONE_FORMAT');
