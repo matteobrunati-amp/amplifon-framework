@@ -1,0 +1,14 @@
+{
+  "name": "amplifon-framework",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Framework modulare per landing Amplifon / EarPros su Unbounce",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/build.mjs --check"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
