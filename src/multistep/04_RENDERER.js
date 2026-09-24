@@ -84,16 +84,6 @@
       }
     );
 
-    const contactBack = N(
-      'button',
-      {
-        type: 'button',
-        class: 'amp-back',
-        'data-amp-action': 'back',
-        text: '‹ ' + c.copy.back
-      }
-    );
-
     const original = {
       lang: d.documentElement.lang,
       title: d.title
@@ -793,7 +783,6 @@
       right.append(form);
 
       contactView.append(
-        contactBack,
         N(
           'div',
           {
@@ -919,11 +908,6 @@
             );
           }
 
-          if (action === 'back') {
-            actions.back &&
-            actions.back();
-          }
-
           /*
            * Nessuno scroll automatico.
            * La posizione della viewport rimane sotto controllo dell'utente.
@@ -1005,20 +989,6 @@
           class: 'amp-step-top'
         }
       );
-
-      if (state.path.length > 1) {
-        nav.append(
-          N(
-            'button',
-            {
-              type: 'button',
-              class: 'amp-back',
-              'data-amp-action': 'back',
-              text: '‹ ' + c.copy.back
-            }
-          )
-        );
-      }
 
       const heading = N(
         'h2',
@@ -1329,7 +1299,6 @@
       ].includes(state);
 
       sendButton.disabled = busy;
-      contactBack.disabled = busy;
 
       form.setAttribute(
         'aria-busy',
