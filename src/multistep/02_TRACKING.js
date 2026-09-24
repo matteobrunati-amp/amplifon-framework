@@ -139,8 +139,9 @@
         }
       };
 
-      if (isLead) {
-        payload.cfg = {noview: true};
+      if (isLead || c.tracking.noView === true) {
+        payload.cfg = payload.cfg || {};
+        payload.cfg.noview = true;
       }
 
       if (contact && contactPermission()) {
