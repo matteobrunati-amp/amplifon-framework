@@ -1,4 +1,4 @@
-/* 05 — RENDERER. Tutto il markup visibile nasce dalla CONFIG, non dal DOM legacy. */
+﻿/* 05 â€” RENDERER. Tutto il markup visibile nasce dalla CONFIG, non dal DOM legacy. */
 (function (w, d) {
   'use strict';
 
@@ -152,7 +152,7 @@
         element.focus({preventScroll: true});
       } catch (_) {
         /*
-         * Non usiamo focus() come fallback perché sui browser meno recenti
+         * Non usiamo focus() come fallback perchÃ© sui browser meno recenti
          * potrebbe generare proprio lo scroll automatico che vogliamo evitare.
          */
       }
@@ -176,7 +176,7 @@
                 {
                   class: 'amp-check',
                   'aria-hidden': 'true',
-                  text: '✓'
+                  text: 'âœ“'
                 }
               ),
               N('span', {text: text})
@@ -254,8 +254,8 @@
                 class: 'amp-stars',
                 'aria-label': review.rating + ' / 5',
                 text:
-                  '★'.repeat(review.rating) +
-                  '☆'.repeat(5 - review.rating)
+                  'â˜…'.repeat(review.rating) +
+                  'â˜†'.repeat(5 - review.rating)
               }
             )
           );
@@ -777,7 +777,16 @@
             class: 'amp-submit-note',
             text: c.copy.submitNote
           }
-        )
+        ),
+        c.copy.legalNotice
+          ? N(
+              'p',
+              {
+                class: 'amp-legal-notice',
+                text: c.copy.legalNotice
+              }
+            )
+          : null
       );
 
       right.append(form);
@@ -1383,3 +1392,4 @@
     create: create
   };
 })(window, document);
+

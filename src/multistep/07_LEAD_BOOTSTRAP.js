@@ -51,6 +51,12 @@
       attemptId: attempt.id,
       heading: c.copy.successHeading,
       text: c.copy.successText,
+      subtext: c.copy.successSubtext || '',
+      lead: c.copy.successLead || '',
+      stepsHeading: c.copy.successStepsHeading || '',
+      successSteps: Array.isArray(c.copy.successSteps) ? c.copy.successSteps : [],
+      reminderHeading: c.copy.successReminderHeading || '',
+      reminderText: c.copy.successReminderText || '',
       logo: confirmationAsset(c.assets.logo),
       lang: c.page.htmlLang,
       redirecting: !!(c.success.redirectUrl && c.runtime.mode === 'live'),
@@ -724,4 +730,5 @@
 
   U.ready(boot);
 })(window, document);
+
 
