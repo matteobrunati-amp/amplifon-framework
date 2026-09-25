@@ -176,7 +176,7 @@
                 {
                   class: 'amp-check',
                   'aria-hidden': 'true',
-                  text: 'âœ“'
+                  text: '\u2713'
                 }
               ),
               N('span', {text: text})
@@ -254,8 +254,8 @@
                 class: 'amp-stars',
                 'aria-label': review.rating + ' / 5',
                 text:
-                  'â˜…'.repeat(review.rating) +
-                  'â˜†'.repeat(5 - review.rating)
+                  '\u2605'.repeat(review.rating) +
+                  '\u2606'.repeat(5 - review.rating)
               }
             )
           );
