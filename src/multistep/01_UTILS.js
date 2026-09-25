@@ -1,4 +1,4 @@
-/* 02 — UTILITY, VALIDAZIONI E CICLO DI VITA. Nessun tracking, rendering o submit. */
+﻿/* 02 â€” UTILITY, VALIDAZIONI E CICLO DI VITA. Nessun tracking, rendering o submit. */
 (function (w, d) {
   'use strict';
 
@@ -380,6 +380,19 @@
       );
     }
 
+    assert(
+
+
+      ['framework','unbounce-dialog'].includes(c.success.presentation || 'framework'),
+
+
+      'CONFIG_SUCCESS_PRESENTATION'
+
+
+    );
+
+
+
     if (c.success.redirectUrl) {
       const url = safeUrl(c.success.redirectUrl);
 
@@ -438,3 +451,4 @@
     releaseBlocks
   };
 })(window, document);
+
