@@ -1,0 +1,10 @@
+{
+  "framework": "amplifon-framework",
+  "family": "multistep",
+  "version": "1.0.8",
+  "files": [
+    "amplifon-multistep.js",
+    "amplifon-multistep.css",
+    "amplifon-confirmation.js"
+  ]
+}
