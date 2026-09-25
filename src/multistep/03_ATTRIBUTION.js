@@ -1,8 +1,8 @@
-/* ============================================================================
- * 04 — ATTRIBUTION / MCI / SORG / ADCLID / ICMP
+﻿/* ============================================================================
+ * 04 â€” ATTRIBUTION / MCI / SORG / ADCLID / ICMP
  * Nessun dato personale.
  *
- * Responsabilità:
+ * ResponsabilitÃ :
  * - legge i parametri ammessi dall'URL;
  * - completa i valori dai campi nativi / fallback;
  * - registra l'ICMP dell'ultima interazione;
@@ -70,6 +70,13 @@
         values.mci = c.attribution.fallbackMci;
         origins.mci = 'config';
       }
+
+      /*
+       * Sincronizza subito l'URL anche senza interazione.
+       * Il fallback MCI compare al caricamento; un valore nativo
+       * puo' ancora sostituirlo quando il bridge Unbounce e' pronto.
+       */
+      updateCurrentUrl();
     }
 
     function decorateAllowedParams(url) {
@@ -133,7 +140,7 @@
 
     /*
      * All'avvio leggiamo solo il contesto disponibile.
-     * Non modifichiamo l'URL finché non avviene un'interazione.
+     * Non modifichiamo l'URL finchÃ© non avviene un'interazione.
      */
     useNative(function () {
       return '';
@@ -164,3 +171,4 @@
     create: create
   };
 })(window);
+

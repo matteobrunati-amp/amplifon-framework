@@ -1,9 +1,9 @@
-/* ============================================================================
- * 03 — TRACKING LEGACY LEGGIBILE
+﻿/* ============================================================================
+ * 03 â€” TRACKING LEGACY LEGGIBILE
  * Input: snapshot del percorso. Output: digitalData / wa_gc / direct call Adobe.
  * Non legge i campi dal DOM, non decide lo step, non invia il form.
  * API: trackStepView, trackAnswer, trackFormView, trackFormSubmit,
- *      trackFormSent, trackRejection. Il mapping è SOLO nello SCRIPT 1.
+ *      trackFormSent, trackRejection. Il mapping Ã¨ SOLO nello SCRIPT 1.
  * ========================================================================== */
 (function (w) {
   'use strict';
@@ -42,8 +42,8 @@
 
     /*
      * domain-managed:
-     * il framework non blocca l'emissione perché la policy dei tag viene gestita
-     * dal layer/CMP già presente a livello dominio.
+     * il framework non blocca l'emissione perchÃ© la policy dei tag viene gestita
+     * dal layer/CMP giÃ  presente a livello dominio.
      *
      * reader:
      * il framework attende un consenso esplicito dal consentReader.
@@ -352,10 +352,32 @@
     function trackStepView(step, context) {
       const snapshot = U.clone(context);
 
+      const isFirstView =
+        step.id === c.funnel.start;
+
       const name =
-        step.id === c.funnel.start
+        isFirstView
           ? c.tracking.events.firstView
           : step.viewEvent;
+
+      /*
+       * In modalita' bootstrap il primo form_multi_0 e' gia'
+       * presente in digitalData prima del normale page tracking
+       * Adobe di dominio. Non lo reinviamo con wa_gc.
+       */
+      if (
+        isFirstView &&
+        c.tracking.firstViewMode === 'bootstrap'
+      ) {
+        remember(
+          name,
+          'bootstrap',
+          'inherited',
+          'page-load:first-view'
+        );
+
+        return;
+      }
 
       enqueue(
         name,
@@ -478,6 +500,8 @@
     function inspect() {
       return {
         enabled: c.tracking.enabled === true,
+        firstViewMode: c.tracking.firstViewMode || 'dispatch',
+        noView: c.tracking.noView === true,
         consentMode: consentMode(),
         contactDataMode: contactDataMode(),
         dependencies: {
@@ -529,3 +553,4 @@
 
   App.modules.tracking = {create: create};
 })(window);
+
