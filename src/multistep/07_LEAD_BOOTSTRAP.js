@@ -1,5 +1,5 @@
-/* ============================================================================
- * 08 — LEAD + BOOTSTRAP
+﻿/* ============================================================================
+ * 08 â€” LEAD + BOOTSTRAP
  * Un solo tentativo, un solo successo logico.
  * UI, attribution, tracking e trasporto Unbounce restano separati.
  * ========================================================================== */
@@ -32,6 +32,17 @@
 
   const confirmationFrames = new Map();
 
+  function confirmationAsset(source) {
+    if (!source) return '';
+    if (/^https:\/\//i.test(String(source))) {
+      const absolute = U.safeUrl(source);
+      return absolute ? absolute.toString() : '';
+    }
+    if (!c || !c.assets || !c.assets.repositoryBase) return '';
+    const resolved = U.safeUrl(source, c.assets.repositoryBase);
+    return resolved ? resolved.toString() : '';
+  }
+
   function confirmationMessage(nonce) {
     return {
       type: 'amp:confirmation-confirmed',
@@ -40,8 +51,10 @@
       attemptId: attempt.id,
       heading: c.copy.successHeading,
       text: c.copy.successText,
-      logo: c.assets.logo,
-      lang: c.page.htmlLang
+      logo: confirmationAsset(c.assets.logo),
+      lang: c.page.htmlLang,
+      redirecting: !!(c.success.redirectUrl && c.runtime.mode === 'live'),
+      redirectDelayMs: c.success.redirectDelayMs
     };
   }
 
@@ -141,9 +154,11 @@
     attempt.status = 'succeeded';
 
     tracking.trackFormSent(attempt);
-
     ui.setStatus('succeeded');
-    ui.showSuccess();
+
+    if ((c.success.presentation || 'framework') === 'framework') {
+      ui.showSuccess();
+    }
 
     engine.cleanAfterSuccess();
 
@@ -495,7 +510,7 @@
 
         /*
          * CTA esplicita "JETZT STARTEN":
-         * torna al questionario e SOLO QUI è ammesso lo scroll.
+         * torna al questionario e SOLO QUI Ã¨ ammesso lo scroll.
          */
         start: function () {
           engine.resume();
@@ -709,3 +724,4 @@
 
   U.ready(boot);
 })(window, document);
+
