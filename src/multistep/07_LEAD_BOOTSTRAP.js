@@ -148,6 +148,42 @@
     tracking.trackFormSubmit(attempt);
   }
 
+  function trackTaboolaLead(currentAttempt) {
+    const cfg =
+      c &&
+      c.conversions &&
+      c.conversions.taboola
+        ? c.conversions.taboola
+        : null;
+
+    if (
+      !cfg ||
+      cfg.enabled !== true ||
+      !currentAttempt ||
+      currentAttempt.taboolaTracked === true
+    ) {
+      return;
+    }
+
+    currentAttempt.taboolaTracked = true;
+
+    w._tfa = w._tfa || [];
+
+    w._tfa.push({
+      notify: 'event',
+      name: String(cfg.eventName),
+      id: Number(cfg.accountId)
+    });
+
+    if (c.runtime.debug) {
+      console.info(
+        '[AMP conversion] Taboola',
+        cfg.eventName,
+        currentAttempt.id
+      );
+    }
+  }
+
   function succeeded(id) {
     if (
       !attempt ||
@@ -160,6 +196,13 @@
     attempt.status = 'succeeded';
 
     tracking.trackFormSent(attempt);
+
+    /*
+     * Conversione Taboola dedicata.
+     * Viene eseguita SOLO dopo il successo reale del lead.
+     * Non passa da Adobe Launch e non genera Meta Lead.
+     */
+    trackTaboolaLead(attempt);
     ui.setStatus('succeeded');
 
     if ((c.success.presentation || 'framework') === 'framework') {
