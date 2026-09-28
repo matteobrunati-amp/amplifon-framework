@@ -251,8 +251,8 @@
       'success',
       'funnel',
       'copy',
-      'reviews'
-    ];
+      'reviews',
+      'conversions'];
 
     Object.keys(c).forEach(function (key) {
       assert(topKeys.includes(key), 'CONFIG_UNKNOWN_KEY:' + key);
@@ -371,6 +371,24 @@
         'CONFIG_TECHNICAL_ATTRIBUTION_COLLISION'
       );
     });
+
+    if (
+      c.conversions &&
+      c.conversions.taboola &&
+      c.conversions.taboola.enabled === true
+    ) {
+      assert(
+        Number.isInteger(c.conversions.taboola.accountId) &&
+        c.conversions.taboola.accountId > 0,
+        'CONFIG_TABOOLA_ACCOUNT'
+      );
+
+      assert(
+        typeof c.conversions.taboola.eventName === 'string' &&
+        c.conversions.taboola.eventName.trim().length > 0,
+        'CONFIG_TABOOLA_EVENT'
+      );
+    }
 
     if (c.tracking.enabled) {
       assert(
