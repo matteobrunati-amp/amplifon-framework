@@ -158,6 +158,66 @@
       }
     }
 
+    function dynamicHeaderData() {
+      const cfg =
+        c.copy &&
+        c.copy.dynamicHeader &&
+        c.copy.dynamicHeader.enabled === true
+          ? c.copy.dynamicHeader
+          : null;
+
+      if (!cfg) {
+        return {
+          region: '',
+          heading: c.copy.heading || ''
+        };
+      }
+
+      const params = new URLSearchParams(w.location.search);
+      const regionParam = cfg.regionParam || 'region';
+      const numberParam = cfg.numberParam || 'number';
+
+      let region = String(params.get(regionParam) || '')
+        .trim()
+        .replace(/\s+/g, ' ');
+
+      let number = String(params.get(numberParam) || '').trim();
+
+      if (
+        region.length > 60 ||
+        /[\u0000-\u001f\u007f]/.test(region)
+      ) {
+        region = '';
+      }
+
+      if (!/^\d{1,4}$/.test(number)) {
+        number = '';
+      }
+
+      const transform = cfg.regionTransform || 'uppercase';
+
+      if (region) {
+        if (transform === 'uppercase') region = region.toUpperCase();
+        else if (transform === 'lowercase') region = region.toLowerCase();
+      }
+
+      let heading = '';
+
+      if (number && cfg.textWithNumber) {
+        heading = String(cfg.textWithNumber).replace(/\{number\}/g, number);
+      } else if (cfg.textWithoutNumber) {
+        heading = String(cfg.textWithoutNumber);
+      } else {
+        heading = c.copy.heading || '';
+      }
+
+      return {
+        region: region,
+        heading: heading,
+        number: number
+      };
+    }
+
     function featureList(items, compact) {
       return N(
         'ul',
@@ -507,26 +567,44 @@
         ]
       );
 
+      const dynamicHeader = dynamicHeaderData();
+
+      const heroChildren = [];
+
+      if (dynamicHeader.region) {
+        heroChildren.push(
+          N(
+            'div',
+            {
+              class: 'amp-hero-region',
+              text: dynamicHeader.region
+            }
+          )
+        );
+      }
+
+      heroChildren.push(
+        N(
+          'h1',
+          {
+            text: dynamicHeader.heading
+          }
+        ),
+        N(
+          'p',
+          {
+            class: 'amp-intro',
+            text: c.copy.intro
+          }
+        )
+      );
+
       const heroCopy = N(
         'div',
         {
           class: 'amp-hero-copy'
         },
-        [
-          N(
-            'h1',
-            {
-              text: c.copy.heading
-            }
-          ),
-          N(
-            'p',
-            {
-              class: 'amp-intro',
-              text: c.copy.intro
-            }
-          )
-        ]
+        heroChildren
       );
 
       const heroInner = N(
