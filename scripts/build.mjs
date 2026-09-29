@@ -7,9 +7,9 @@ const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'))
 const version = pkg.version;
 const outDir = path.join(root, 'dist', version);
 const checkOnly = process.argv.includes('--check');
-
 const orderedModules = [
   '01_UTILS.js',
+  '01B_MARKET_VALIDATION.js',
   '02_TRACKING.js',
   '03_ATTRIBUTION.js',
   '04_RENDERER.js',
@@ -17,15 +17,15 @@ const orderedModules = [
   '06_UNBOUNCE_BRIDGE.js',
   '07_LEAD_BOOTSTRAP.js'
 ];
-
 const banner = `/* Amplifon Framework - multistep v${version} | generated; edit src/, not dist/ */\n`;
 const js = banner + orderedModules.map((file) => {
   const p = path.join(root, 'src', 'multistep', file);
   if (!fs.existsSync(p)) throw new Error(`Missing source: ${p}`);
   return `\n/* ===== ${file} ===== */\n${fs.readFileSync(p, 'utf8').trim()}\n`;
 }).join('');
-
 const css = fs.readFileSync(path.join(root, 'src', 'styles', 'amplifon-multistep.css'), 'utf8');
+const de365Override = fs.readFileSync(path.join(root, 'src', 'styles', 'pages', 'amplifon-de365.css'), 'utf8');
+const de365Css = css + '\n\n/* ===== DE365 PAGE OVERRIDES ===== */\n' + de365Override;
 const confirmation = fs.readFileSync(path.join(root, 'src', 'confirmation', 'amplifon-confirmation.js'), 'utf8');
 const manifest = JSON.stringify({
   framework: 'amplifon-framework',
@@ -34,13 +34,14 @@ const manifest = JSON.stringify({
   files: [
     'amplifon-multistep.js',
     'amplifon-multistep.css',
+    'amplifon-de365.css',
     'amplifon-confirmation.js'
   ]
 }, null, 2) + '\n';
-
 const outputs = new Map([
   ['amplifon-multistep.js', js],
   ['amplifon-multistep.css', css],
+  ['amplifon-de365.css', de365Css],
   ['amplifon-confirmation.js', confirmation],
   ['manifest.json', manifest]
 ]);
@@ -56,7 +57,6 @@ if (checkOnly) {
   }
   process.exit(ok ? 0 : 1);
 }
-
 fs.mkdirSync(outDir, { recursive: true });
 for (const [file, content] of outputs) {
   fs.writeFileSync(path.join(outDir, file), content);

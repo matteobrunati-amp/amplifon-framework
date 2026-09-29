@@ -1,0 +1,1312 @@
+/* ============================================================
+   AMPLIFON DE365
+   CSS LOCALE COMPLETO E CONSOLIDATO
+   Framework: v1.0.11
+   ============================================================ */
+
+:root {
+  --amp-page-width: 1040px;
+  --amp-grey-page: #f3f3f3;
+  --amp-grey-main: #dedede;
+  --amp-grey-question: #f1f1f1;
+  --amp-grey-footer: #ececec;
+  --amp-white: #ffffff;
+  --amp-brand: #d00040;
+  --amp-text: #222222;
+}
+
+
+/* ============================================================
+   1. PREBOOT / ANTI-FLASH
+   ============================================================ */
+
+#lp-pom-root {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+#amp-app {
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100%;
+  overflow-x: hidden;
+  background: var(--amp-grey-page) !important;
+}
+
+
+/* ============================================================
+   2. BASE
+   ============================================================ */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background: var(--amp-grey-page) !important;
+}
+
+.amp-step-top {
+  display: none !important;
+}
+
+
+/* ============================================================
+   3. DESKTOP — QUIZ
+   ============================================================ */
+
+@media (min-width: 681px) {
+
+  .amp-header {
+    width: 100% !important;
+    background: #fff !important;
+  }
+
+  .amp-header-inner {
+    min-height: 82px !important;
+    padding: 10px 24px !important;
+  }
+
+  .amp-logo {
+    width: 190px !important;
+    height: auto !important;
+  }
+
+  .amp-hero {
+    width: 100% !important;
+    margin: 0 !important;
+    background: #fff !important;
+  }
+
+  .amp-hero-inner {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 290px !important;
+    gap: 38px !important;
+    align-items: center !important;
+    width: min(var(--amp-page-width), calc(100% - 64px)) !important;
+    min-height: 0 !important;
+    margin: 0 auto !important;
+    padding: 28px 36px 24px !important;
+    box-sizing: border-box;
+    background: var(--amp-grey-main) !important;
+  }
+
+  .amp-hero-copy {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: center !important;
+  }
+
+  .amp-hero-region {
+    width: 100% !important;
+    max-width: 650px !important;
+    margin: 0 auto 13px !important;
+    padding: 10px 22px !important;
+    box-sizing: border-box;
+    border-radius: 999px !important;
+    font-size: 22px !important;
+    line-height: 1 !important;
+    font-weight: 700 !important;
+    letter-spacing: 1.4px !important;
+    text-align: center !important;
+  }
+
+  .amp-hero h1 {
+    width: 100% !important;
+    max-width: 650px !important;
+    margin: 0 auto 13px !important;
+    font-size: 23px !important;
+    line-height: 1.22 !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    text-align: center !important;
+  }
+
+  .amp-intro {
+    width: 100% !important;
+    max-width: 650px !important;
+    margin: 0 auto !important;
+    padding: 9px 12px !important;
+    box-sizing: border-box;
+    background: #f7f7f7 !important;
+    color: var(--amp-brand) !important;
+    font-size: 20px !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+  }
+
+  .amp-hero-media {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .amp-hero-photo {
+    display: block !important;
+    width: 265px !important;
+    height: 180px !important;
+    margin: 0 auto !important;
+    object-fit: cover !important;
+    box-sizing: border-box;
+    border: 5px solid #fff !important;
+  }
+
+  .amp-quiz-shell.amp-shell {
+    width: min(var(--amp-page-width), calc(100% - 64px)) !important;
+    margin: 0 auto !important;
+    padding: 42px 70px 0 !important;
+    box-sizing: border-box;
+    background: var(--amp-grey-main) !important;
+  }
+
+  .amp-question-card {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    margin: 0 auto !important;
+    padding: 0 0 28px !important;
+    box-sizing: border-box;
+    overflow: hidden !important;
+    border: 0 !important;
+    outline: 0 !important;
+    border-radius: 14px !important;
+    background: #fff !important;
+    box-shadow: 0 4px 9px rgba(0, 0, 0, .16) !important;
+  }
+
+  .amp-question-heading {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: auto !important;
+    min-height: 0 !important;
+    margin: 36px 58px 0 !important;
+    padding: 26px 30px !important;
+    box-sizing: border-box;
+    background: var(--amp-grey-question) !important;
+  }
+
+  .amp-question-heading h2 {
+    width: 100% !important;
+    max-width: 650px !important;
+    margin: 0 auto !important;
+    font-size: 28px !important;
+    line-height: 1.18 !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+  }
+
+  .amp-answers {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 11px !important;
+    margin: 0 !important;
+    padding: 30px 0 0 !important;
+  }
+
+  .amp-answers .amp-button {
+    width: 360px !important;
+    max-width: 62% !important;
+    min-height: 52px !important;
+    margin: 0 !important;
+    padding: 10px 18px !important;
+    border-radius: 999px !important;
+    font-size: 18px !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+  }
+
+  .amp-progress {
+    width: 250px !important;
+    margin: 24px auto 0 !important;
+  }
+
+  .amp-progress li span {
+    width: 31px !important;
+    height: 31px !important;
+    font-size: 12px !important;
+    line-height: 31px !important;
+  }
+
+  .amp-progress li:not(:last-child)::after {
+    top: 14px !important;
+  }
+
+  /* benefits are inside .amp-quiz-shell */
+  .amp-quiz-shell > .amp-features {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 46px 0 0 !important;
+    padding: 0 0 42px !important;
+    background: transparent !important;
+  }
+
+  .amp-features {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 48px !important;
+  }
+
+  .amp-features > li {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: center !important;
+  }
+
+  .amp-features > li > span:last-child {
+    max-width: 240px !important;
+    font-size: 15px !important;
+    line-height: 1.35 !important;
+    text-align: center !important;
+  }
+
+  /* actual reviews wrapper */
+  .amp-social.amp-shell {
+    width: min(var(--amp-page-width), calc(100% - 64px)) !important;
+    margin: 0 auto !important;
+    padding: 0 70px 48px !important;
+    box-sizing: border-box !important;
+    background: var(--amp-grey-main) !important;
+  }
+
+  .amp-social > #amp-reviews-heading {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 18px 0 20px !important;
+    box-sizing: border-box !important;
+    background: transparent !important;
+    color: var(--amp-text) !important;
+    font-size: 18px !important;
+    line-height: 1.3 !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    border: 0 !important;
+  }
+
+  .amp-social > .amp-reviews {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 34px !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    background: transparent !important;
+  }
+
+  .amp-social .amp-review {
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 0 18px !important;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgba(0, 0, 0, .10) !important;
+  }
+
+  .amp-social .amp-review blockquote {
+    font-size: 14px !important;
+    line-height: 1.48 !important;
+  }
+
+  .amp-bottom.amp-shell {
+    width: min(var(--amp-page-width), calc(100% - 64px)) !important;
+    margin: 0 auto !important;
+    padding: 34px 60px 32px !important;
+    box-sizing: border-box !important;
+    background: #fff !important;
+    text-align: center !important;
+  }
+
+  .amp-bottom > h2 {
+    max-width: 620px !important;
+    margin: 0 auto !important;
+    color: var(--amp-brand) !important;
+    font-size: 22px !important;
+    line-height: 1.25 !important;
+  }
+
+  .amp-bottom > .amp-button {
+    width: 350px !important;
+    max-width: 100% !important;
+    margin-top: 17px !important;
+  }
+
+  .amp-bottom > .amp-disclaimer {
+    max-width: 720px !important;
+    margin: 16px auto 0 !important;
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+  }
+
+  .amp-footer,
+  .amp-legal {
+    width: 100% !important;
+    padding: 18px 20px !important;
+    box-sizing: border-box;
+    background: var(--amp-grey-footer) !important;
+  }
+}
+
+
+/* ============================================================
+   4. MOBILE — QUIZ
+   ============================================================ */
+
+@media (max-width: 680px) {
+
+  .amp-header {
+    background: #fff !important;
+  }
+
+  .amp-header-inner {
+    min-height: 58px !important;
+    padding: 7px 14px !important;
+  }
+
+  .amp-logo {
+    width: 155px !important;
+    max-width: 50vw !important;
+    height: auto !important;
+  }
+
+  .amp-hero {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: var(--amp-grey-main) !important;
+  }
+
+  .amp-hero-inner {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+    gap: 0 !important;
+    padding: 10px 14px !important;
+    box-sizing: border-box;
+    min-height: 0 !important;
+  }
+
+  .amp-hero-copy {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: center !important;
+  }
+
+  .amp-hero-region {
+    width: calc(100% - 44px) !important;
+    max-width: 310px !important;
+    margin: 0 auto 8px !important;
+    padding: 8px 16px !important;
+    box-sizing: border-box;
+    border-radius: 999px !important;
+    font-size: 18px !important;
+    line-height: 1 !important;
+    font-weight: 700 !important;
+  }
+
+  .amp-hero h1 {
+    width: 100% !important;
+    max-width: 330px !important;
+    margin: 0 auto 7px !important;
+    font-size: 16px !important;
+    line-height: 1.22 !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    text-align: center !important;
+  }
+
+  .amp-intro {
+    width: 100% !important;
+    margin: 6px 0 8px !important;
+    padding: 6px 8px !important;
+    box-sizing: border-box;
+    background: #f7f7f7 !important;
+    color: var(--amp-brand) !important;
+    font-size: 16px !important;
+    line-height: 1.08 !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+  }
+
+  .amp-hero-media {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: center !important;
+  }
+
+  .amp-hero-photo {
+    display: block !important;
+    width: 150px !important;
+    height: 103px !important;
+    margin: 0 auto !important;
+    object-fit: cover !important;
+    box-sizing: border-box;
+    border: 4px solid #fff !important;
+  }
+
+  .amp-quiz-shell.amp-shell {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 8px 14px 0 !important;
+    box-sizing: border-box;
+    background: var(--amp-grey-main) !important;
+  }
+
+  .amp-question-card {
+    width: 100% !important;
+    max-width: 330px !important;
+    min-height: 0 !important;
+    margin: 0 auto !important;
+    padding: 0 0 14px !important;
+    box-sizing: border-box;
+    overflow: hidden !important;
+    border: 0 !important;
+    outline: 0 !important;
+    border-radius: 16px !important;
+    background: #fff !important;
+    box-shadow: 0 4px 9px rgba(0, 0, 0, .17) !important;
+  }
+
+  .amp-question-heading {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 17px 16px 13px !important;
+    box-sizing: border-box;
+    background: var(--amp-grey-question) !important;
+  }
+
+  .amp-question-heading h2 {
+    width: 100% !important;
+    max-width: 280px !important;
+    margin: 0 auto !important;
+    font-size: 20px !important;
+    line-height: 1.16 !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+  }
+
+  .amp-answers {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin: 0 !important;
+    padding: 11px 0 0 !important;
+  }
+
+  .amp-answers .amp-button {
+    width: 165px !important;
+    max-width: 75% !important;
+    min-height: 42px !important;
+    padding: 7px 12px !important;
+    border-radius: 999px !important;
+    font-size: 16px !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+  }
+
+  .amp-progress {
+    width: 215px !important;
+    max-width: 75% !important;
+    margin: 15px auto 0 !important;
+  }
+
+  .amp-progress li span {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 11px !important;
+    line-height: 28px !important;
+  }
+
+  .amp-progress li:not(:last-child)::after {
+    top: 13px !important;
+  }
+
+  .amp-quiz-shell > .amp-features {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 26px 20px 24px !important;
+    background: transparent !important;
+  }
+
+  .amp-features {
+    display: block !important;
+  }
+
+  .amp-features > li {
+    display: grid !important;
+    grid-template-columns: 32px minmax(0, 1fr) !important;
+    gap: 10px !important;
+    align-items: start !important;
+    margin: 0 0 14px !important;
+    padding: 0 !important;
+  }
+
+  .amp-features > li:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  .amp-features > li > span:last-child {
+    font-size: 15px !important;
+    line-height: 1.4 !important;
+  }
+
+  .amp-social.amp-shell {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 18px 24px !important;
+    box-sizing: border-box !important;
+    background: var(--amp-grey-main) !important;
+  }
+
+  .amp-social > #amp-reviews-heading {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 18px 0 14px !important;
+    background: transparent !important;
+    color: var(--amp-text) !important;
+    font-size: 18px !important;
+    line-height: 1.25 !important;
+    font-weight: 700 !important;
+  }
+
+  .amp-social > .amp-reviews {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  .amp-social .amp-review {
+    width: 100% !important;
+    margin: 0 0 18px !important;
+    padding: 0 0 17px !important;
+    border-bottom: 1px solid rgba(0, 0, 0, .10) !important;
+  }
+
+  .amp-social .amp-review:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  .amp-social .amp-review blockquote {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+
+  .amp-bottom.amp-shell {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 28px 14px 30px !important;
+    box-sizing: border-box !important;
+    background: #fff !important;
+    text-align: center !important;
+  }
+
+  .amp-bottom > h2 {
+    max-width: 330px !important;
+    margin: 0 auto !important;
+    color: var(--amp-brand) !important;
+    font-size: 19px !important;
+    line-height: 1.28 !important;
+  }
+
+  .amp-bottom > .amp-button {
+    display: flex !important;
+    width: 100% !important;
+    max-width: 350px !important;
+    margin: 14px auto 0 !important;
+  }
+
+  .amp-bottom > .amp-disclaimer {
+    max-width: 345px !important;
+    margin: 14px auto 0 !important;
+    font-size: 12px !important;
+    line-height: 1.55 !important;
+    text-align: center !important;
+  }
+
+  .amp-footer,
+  .amp-legal {
+    width: 100% !important;
+    padding: 20px 18px !important;
+    box-sizing: border-box;
+    background: var(--amp-grey-footer) !important;
+  }
+}
+
+
+/* ============================================================
+   5. CONTACT — DESKTOP
+   ============================================================ */
+
+@media (min-width: 681px) {
+
+  [data-amp-view="contact"] {
+    padding: 34px 24px 54px !important;
+    box-sizing: border-box;
+    background: var(--amp-grey-page) !important;
+  }
+
+  .amp-contact-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 440px !important;
+    gap: 48px !important;
+    width: min(1160px, calc(100% - 48px)) !important;
+    margin: 0 auto !important;
+    padding: 34px 36px !important;
+    box-sizing: border-box;
+    align-items: start !important;
+    background: #e7e7e7 !important;
+    border: 0 !important;
+    border-radius: 18px !important;
+  }
+
+  .amp-contact-information {
+    display: block !important;
+    min-width: 0 !important;
+    background: transparent !important;
+  }
+
+  .amp-contact-information > #amp-contact-title {
+    width: 100% !important;
+    margin: 0 0 30px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    color: var(--amp-text) !important;
+    font-size: 31px !important;
+    line-height: 1.12 !important;
+    font-weight: 700 !important;
+    text-align: left !important;
+  }
+
+  .amp-contact-information > #amp-contact-title span {
+    display: block !important;
+  }
+
+  .amp-contact-information .amp-congratulations {
+    margin-bottom: 5px !important;
+    color: var(--amp-brand) !important;
+    font-size: 22px !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+  }
+
+  .amp-contact-grid .amp-contact-reviews-title {
+    width: 100% !important;
+    margin: 0 0 14px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    color: var(--amp-text) !important;
+    font-size: 20px !important;
+    line-height: 1.25 !important;
+    font-weight: 700 !important;
+    text-align: left !important;
+  }
+
+  .amp-contact-grid .amp-reviews--stack {
+    display: block !important;
+    grid-template-columns: none !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 0 32px !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  .amp-contact-grid .amp-review {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 0 18px !important;
+    padding: 0 0 18px !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba(0, 0, 0, .12) !important;
+  }
+
+  .amp-contact-grid .amp-review:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  .amp-contact-grid .amp-review-header {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 16px !important;
+    width: 100% !important;
+    margin: 0 0 8px !important;
+  }
+
+  .amp-contact-grid .amp-review-name {
+    margin: 0 0 3px !important;
+    color: var(--amp-brand) !important;
+    font-size: 16px !important;
+    line-height: 1.2 !important;
+    font-weight: 700 !important;
+  }
+
+  .amp-contact-grid .amp-review-date {
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+  }
+
+  .amp-contact-grid .amp-google {
+    width: 70px !important;
+    height: auto !important;
+    flex: 0 0 auto !important;
+  }
+
+  .amp-contact-grid .amp-stars {
+    margin: 0 0 8px !important;
+    font-size: 18px !important;
+    line-height: 1 !important;
+  }
+
+  .amp-contact-grid .amp-review blockquote {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    color: var(--amp-text) !important;
+    background: transparent !important;
+  }
+
+  .amp-contact-grid .amp-contact-features-title {
+    width: 100% !important;
+    margin: 30px 0 16px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    color: var(--amp-text) !important;
+    font-size: 20px !important;
+    line-height: 1.25 !important;
+    font-weight: 700 !important;
+    text-align: left !important;
+  }
+
+  .amp-contact-grid .amp-features--stack {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  .amp-contact-grid .amp-features--stack li {
+    display: grid !important;
+    grid-template-columns: 34px minmax(0, 1fr) !important;
+    gap: 11px !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin: 0 0 14px !important;
+    padding: 0 !important;
+    text-align: left !important;
+    background: transparent !important;
+  }
+
+  .amp-contact-grid .amp-features--stack li:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  .amp-contact-grid .amp-features--stack .amp-check {
+    width: 32px !important;
+    height: 32px !important;
+    margin: 0 !important;
+  }
+
+  .amp-contact-grid .amp-features--stack li > span:last-child {
+    font-size: 15px !important;
+    line-height: 1.35 !important;
+  }
+
+  .amp-contact-grid .amp-form-card {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+    background: #fff !important;
+    border: 0 !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .10) !important;
+  }
+
+  .amp-form-card .amp-form-heading {
+    margin: 0 !important;
+    padding: 23px 24px !important;
+    box-sizing: border-box;
+    background: #f3f3f3 !important;
+    text-align: center !important;
+  }
+
+  .amp-form-card .amp-form-heading h2 {
+    max-width: 360px !important;
+    margin: 0 auto !important;
+    font-size: 23px !important;
+    line-height: 1.17 !important;
+    font-weight: 700 !important;
+  }
+
+  .amp-form-card .amp-contact-form {
+    padding: 22px 24px 26px !important;
+    box-sizing: border-box;
+  }
+
+  .amp-form-card .amp-form-intro {
+    margin: 0 0 18px !important;
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    text-align: center !important;
+  }
+
+  .amp-form-card .amp-field {
+    margin-bottom: 14px !important;
+  }
+
+  .amp-form-card .amp-field label {
+    display: block !important;
+    margin: 0 0 6px !important;
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+    font-weight: 700 !important;
+  }
+
+  .amp-form-card .amp-field input {
+    width: 100% !important;
+    min-height: 46px !important;
+    padding: 9px 10px !important;
+    box-sizing: border-box;
+  }
+
+  .amp-form-card .amp-consent {
+    margin: 12px 0 16px !important;
+  }
+
+  .amp-form-card .amp-consent-label {
+    display: grid !important;
+    grid-template-columns: 22px minmax(0, 1fr) !important;
+    column-gap: 8px !important;
+    align-items: start !important;
+    margin: 0 !important;
+  }
+
+  .amp-form-card .amp-consent-label input[type="checkbox"] {
+    width: 18px !important;
+    height: 18px !important;
+    margin: 1px 0 0 !important;
+    grid-column: 1 !important;
+  }
+
+  .amp-form-card .amp-consent-label > span {
+    grid-column: 2 !important;
+    margin: 0 !important;
+    font-size: 13px !important;
+    line-height: 1.3 !important;
+    font-weight: 700 !important;
+  }
+
+  .amp-form-card .amp-consent-copy {
+    margin: 6px 0 0 30px !important;
+    padding: 0 !important;
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+  }
+
+  .amp-form-card .amp-consent-copy a {
+    color: var(--amp-brand) !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    text-decoration: underline !important;
+    text-underline-offset: 2px !important;
+  }
+
+  .amp-form-card details.amp-consent-details {
+    margin: 5px 0 0 30px !important;
+    padding: 0 !important;
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+  }
+
+  .amp-form-card details.amp-consent-details > summary {
+    display: inline-block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: var(--amp-brand) !important;
+    font-size: 12px !important;
+    line-height: 1.3 !important;
+    font-weight: 400 !important;
+    text-decoration: underline !important;
+    text-underline-offset: 2px !important;
+    cursor: pointer !important;
+    list-style: none !important;
+  }
+
+  .amp-form-card details.amp-consent-details > summary::-webkit-details-marker {
+    display: none !important;
+  }
+
+  .amp-form-card details.amp-consent-details > summary::marker {
+    content: "" !important;
+  }
+
+  .amp-form-card details.amp-consent-details[open] > summary {
+    margin-bottom: 6px !important;
+  }
+
+  .amp-form-card details.amp-consent-details > p {
+    margin: 0 !important;
+    padding: 0 !important;
+    color: var(--amp-text) !important;
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+  }
+
+  .amp-form-card .amp-callout {
+    margin: 18px 0 12px !important;
+    font-size: 14px !important;
+    line-height: 1.35 !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+  }
+
+  .amp-form-card .amp-submit {
+    width: 100% !important;
+    min-height: 50px !important;
+    margin: 0 !important;
+    border-radius: 999px !important;
+    font-size: 17px !important;
+    font-weight: 700 !important;
+  }
+
+  .amp-form-card .amp-submit-note {
+    margin: 10px 0 0 !important;
+    font-size: 10px !important;
+    line-height: 1.4 !important;
+    text-align: center !important;
+  }
+
+  .amp-form-card .amp-legal-notice {
+    margin: 18px 0 0 !important;
+    font-size: 11px !important;
+    line-height: 1.45 !important;
+  }
+}
+
+
+/* ============================================================
+   6. CONTACT — MOBILE
+   ============================================================ */
+
+@media (max-width: 680px) {
+
+  [data-amp-view="contact"] {
+    padding: 12px 12px 24px !important;
+    background: var(--amp-grey-page) !important;
+  }
+
+  .amp-contact-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 14px !important;
+    box-sizing: border-box;
+    background: #e7e7e7 !important;
+    border-radius: 16px !important;
+  }
+
+  .amp-contact-information {
+    display: contents !important;
+  }
+
+  .amp-contact-information > #amp-contact-title {
+    order: 1;
+    width: 100% !important;
+    margin: 0 0 14px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    font-size: 24px !important;
+    line-height: 1.1 !important;
+    text-align: center !important;
+  }
+
+  .amp-contact-information > #amp-contact-title span {
+    display: block !important;
+    text-align: center !important;
+  }
+
+  .amp-contact-information .amp-congratulations {
+    margin-bottom: 4px !important;
+    font-size: 18px !important;
+    text-align: center !important;
+  }
+
+  .amp-contact-grid .amp-form-card {
+    order: 2;
+    width: 100% !important;
+    margin: 0 0 22px !important;
+    padding: 0 !important;
+    background: #fff !important;
+    border: 0 !important;
+    border-radius: 15px !important;
+    overflow: hidden !important;
+    box-shadow: 0 4px 11px rgba(0, 0, 0, .10) !important;
+  }
+
+  .amp-form-card .amp-form-heading {
+    padding: 16px 14px !important;
+    background: #f3f3f3 !important;
+  }
+
+  .amp-form-card .amp-form-heading h2 {
+    margin: 0 !important;
+    font-size: 19px !important;
+    line-height: 1.15 !important;
+    text-align: center !important;
+  }
+
+  .amp-form-card .amp-contact-form {
+    padding: 14px 14px 17px !important;
+  }
+
+  .amp-form-card .amp-form-intro {
+    margin: 0 0 14px !important;
+    font-size: 14px !important;
+    line-height: 1.35 !important;
+    text-align: center !important;
+  }
+
+  .amp-form-card .amp-field {
+    margin-bottom: 11px !important;
+  }
+
+  .amp-form-card .amp-field label {
+    margin-bottom: 4px !important;
+    font-size: 14px !important;
+  }
+
+  .amp-form-card .amp-field input {
+    min-height: 42px !important;
+    height: 42px !important;
+    padding: 7px 9px !important;
+    font-size: 15px !important;
+  }
+
+  /* CONSENT ROW */
+  .amp-form-card .amp-consent {
+    margin: 11px 0 15px !important;
+  }
+
+  .amp-form-card .amp-consent-label {
+    display: grid !important;
+    grid-template-columns: 22px minmax(0, 1fr) !important;
+    column-gap: 9px !important;
+    align-items: start !important;
+    margin: 0 !important;
+  }
+
+  .amp-form-card .amp-consent-label input[type="checkbox"] {
+    width: 18px !important;
+    height: 18px !important;
+    margin: 1px 0 0 !important;
+    grid-column: 1 !important;
+  }
+
+  .amp-form-card .amp-consent-label > span {
+    grid-column: 2 !important;
+    margin: 0 !important;
+    font-size: 14px !important;
+    line-height: 1.25 !important;
+    font-weight: 700 !important;
+  }
+
+  /* PRIVACY LINK */
+  .amp-form-card .amp-consent-copy {
+    margin: 5px 0 0 31px !important;
+    padding: 0 !important;
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+  }
+
+  .amp-form-card .amp-consent-copy a {
+    display: inline !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: var(--amp-brand) !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    text-decoration: underline !important;
+    text-decoration-thickness: 1px !important;
+    text-underline-offset: 2px !important;
+  }
+
+  /* MARKETING READ MORE — actual DOM is <details><summary> */
+  .amp-form-card details.amp-consent-details {
+    margin: 5px 0 0 31px !important;
+    padding: 0 !important;
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+  }
+
+  .amp-form-card details.amp-consent-details > summary {
+    display: inline-block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: var(--amp-brand) !important;
+    font-size: 13px !important;
+    line-height: 1.3 !important;
+    font-weight: 400 !important;
+    text-decoration: underline !important;
+    text-decoration-thickness: 1px !important;
+    text-underline-offset: 2px !important;
+    cursor: pointer !important;
+    list-style: none !important;
+  }
+
+  .amp-form-card details.amp-consent-details > summary::-webkit-details-marker {
+    display: none !important;
+  }
+
+  .amp-form-card details.amp-consent-details > summary::marker {
+    content: "" !important;
+  }
+
+  .amp-form-card details.amp-consent-details[open] > summary {
+    margin-bottom: 7px !important;
+  }
+
+  .amp-form-card details.amp-consent-details > p {
+    margin: 0 !important;
+    padding: 0 !important;
+    color: var(--amp-text) !important;
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+  }
+
+  .amp-form-card .amp-callout {
+    margin: 17px 0 10px !important;
+    padding: 0 4px !important;
+    font-size: 13px !important;
+    line-height: 1.32 !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+  }
+
+  .amp-form-card .amp-submit {
+    min-height: 46px !important;
+    font-size: 17px !important;
+  }
+
+  .amp-form-card .amp-submit-note {
+    margin-top: 8px !important;
+    font-size: 10px !important;
+  }
+
+  .amp-form-card .amp-legal-notice {
+    margin-top: 14px !important;
+    font-size: 10px !important;
+    line-height: 1.4 !important;
+  }
+
+  /* REVIEWS AFTER FORM */
+  .amp-contact-grid .amp-contact-reviews-title {
+    order: 3;
+    width: 100% !important;
+    margin: 0 0 12px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    font-size: 18px !important;
+    line-height: 1.25 !important;
+    text-align: left !important;
+  }
+
+  .amp-contact-grid .amp-reviews--stack {
+    order: 4;
+    display: block !important;
+    width: 100% !important;
+    margin: 0 0 22px !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  .amp-contact-grid .amp-review {
+    width: 100% !important;
+    margin: 0 0 16px !important;
+    padding: 0 0 15px !important;
+    background: transparent !important;
+    border-bottom: 1px solid rgba(0, 0, 0, .12) !important;
+  }
+
+  .amp-contact-grid .amp-review-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  .amp-contact-grid .amp-google {
+    width: 64px !important;
+  }
+
+  .amp-contact-grid .amp-review blockquote {
+    margin: 0 !important;
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+  }
+
+  /* FEATURES AFTER REVIEWS */
+  .amp-contact-grid .amp-contact-features-title {
+    order: 5;
+    width: 100% !important;
+    margin: 0 0 12px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    font-size: 18px !important;
+    line-height: 1.25 !important;
+  }
+
+  .amp-contact-grid .amp-features--stack {
+    order: 6;
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  .amp-contact-grid .amp-features--stack li {
+    display: grid !important;
+    grid-template-columns: 32px minmax(0, 1fr) !important;
+    gap: 10px !important;
+    align-items: center !important;
+    margin: 0 0 13px !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+}@media (max-width: 680px) {
+    .amp-postcode-form {
+        width: 80%!important;
+     
+    }
+}
