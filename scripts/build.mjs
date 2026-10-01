@@ -24,8 +24,8 @@ const js = banner + orderedModules.map((file) => {
   return `\n/* ===== ${file} ===== */\n${fs.readFileSync(p, 'utf8').trim()}\n`;
 }).join('');
 const css = fs.readFileSync(path.join(root, 'src', 'styles', 'amplifon-multistep.css'), 'utf8');
-const de365Override = fs.readFileSync(path.join(root, 'src', 'styles', 'pages', 'amplifon-de365.css'), 'utf8');
-const de365Css = css + '\n\n/* ===== DE365 PAGE OVERRIDES ===== */\n' + de365Override;
+const amplifonTheme = fs.readFileSync(path.join(root, 'src', 'styles', 'themes', 'amplifon-multistep.css'), 'utf8');
+const amplifonCss = css + '\n\n/* ===== AMPLIFON MULTISTEP THEME ===== */\n' + amplifonTheme;
 const confirmation = fs.readFileSync(path.join(root, 'src', 'confirmation', 'amplifon-confirmation.js'), 'utf8');
 const manifest = JSON.stringify({
   framework: 'amplifon-framework',
@@ -34,14 +34,14 @@ const manifest = JSON.stringify({
   files: [
     'amplifon-multistep.js',
     'amplifon-multistep.css',
-    'amplifon-de365.css',
+    'amplifon-multistep-amplifon.css',
     'amplifon-confirmation.js'
   ]
 }, null, 2) + '\n';
 const outputs = new Map([
   ['amplifon-multistep.js', js],
   ['amplifon-multistep.css', css],
-  ['amplifon-de365.css', de365Css],
+  ['amplifon-multistep-amplifon.css', amplifonCss],
   ['amplifon-confirmation.js', confirmation],
   ['manifest.json', manifest]
 ]);

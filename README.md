@@ -76,3 +76,11 @@ Le immagini non appartengono a questo repository. Sono servite dal repository Gi
 
 - `docs/ARCHITETTURA.md`
 - `docs/INSTALLAZIONE_UNBOUNCE.md`
+
+## Dalla v1.0.13: confirmation nativa e separazione contenuti
+
+Il Form Confirmation Dialog è gestito esclusivamente da Unbounce. Il framework gestisce soltanto stato tecnico del lead, tracking, dedupe, pulizia dati e redirect. `amplifon-confirmation.js` resta un segnaposto inerte per compatibilità e non renderizza contenuti. `success.presentation` può essere solo `unbounce-dialog`.
+
+Il repository framework non deve contenere PAGE CONFIG di campagne o copy market-specifico. Testi, domande, recensioni, legal, MCI/ICMP, conversion ID, URL e asset della singola landing restano nel PAGE CONFIG Unbounce. I CSS possono invece rappresentare temi tecnici riutilizzabili: `amplifon-multistep-amplifon.css` è il tema della struttura multistep Amplifon.
+
+La navigazione indietro è una capability tecnica del framework, controllata dal PAGE CONFIG con `funnel.navigation.backEnabled`. Se la proprietà manca o vale `false`, il pulsante non viene renderizzato; con `true`, compare dagli step successivi al primo.

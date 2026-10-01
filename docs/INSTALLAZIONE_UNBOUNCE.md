@@ -27,8 +27,16 @@ Rimuovere i vecchi blocchi grafici e i vecchi script locali dopo il collaudo sul
 
 ## 4. Confirmation Dialog
 
-Se la pagina continua a usare la confirmation dialog nativa, inserire `confirmation/CONFIRMATION_DIALOG_LOADER.html` nella tab della dialog. Non è uno script della pagina principale e non invia un secondo lead.
+Dalla v1.0.13 usare solo il Form Confirmation Dialog nativo. Rimuovere dalla tab JavaScripts del dialog il loader di `amplifon-confirmation.js`. Testi e grafica del dialog si modificano esclusivamente nell’editor Unbounce. Nessun tracking o secondo submit nel dialog: la pagina principale continua a gestire successo, dedupe, conversioni e redirect.
 
 ## 5. Prima del live
 
 Completare nel PAGE CONFIG i valori ancora non verificati: pageID DE, MCI/partner se richiesti, URL GitHub mancanti, regole di esclusione, testi legali/CMP e redirect. Poi passare `runtime.mode` a `live` e `tracking.enabled` a `true` solo dopo il collaudo.
+
+## 6. Ownership dei contenuti
+
+Il framework contiene solo logica tecnica e temi CSS riutilizzabili. Il PAGE CONFIG della singola landing resta in Unbounce e non viene copiato nel repository framework. Copy, domande, recensioni, testi legali, MCI/ICMP, conversion ID, URL e asset configurabili devono quindi essere modificabili da Unbounce.
+
+## 7. Pulsante indietro
+
+Nel PAGE CONFIG usare `funnel.navigation.backEnabled`. Il default effettivo è `false`: se la proprietà manca oppure vale `false`, il renderer non crea il pulsante. Per abilitarlo impostare `true`; non è necessario modificare il framework o il CSS. `copy.back` definisce la label e `attribution.icmp.back` può essere valorizzato se si vuole associare un ICMP al click.

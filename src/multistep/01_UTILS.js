@@ -1,4 +1,4 @@
-﻿/* 02 â€” UTILITY, VALIDAZIONI E CICLO DI VITA. Nessun tracking, rendering o submit. */
+/* 02 â€” UTILITY, VALIDAZIONI E CICLO DI VITA. Nessun tracking, rendering o submit. */
 (function (w, d) {
   'use strict';
 
@@ -321,6 +321,16 @@
 
     assert(map.has(c.funnel.start), 'CONFIG_START');
 
+    if (
+      c.funnel.navigation &&
+      Object.prototype.hasOwnProperty.call(c.funnel.navigation, 'backEnabled')
+    ) {
+      assert(
+        typeof c.funnel.navigation.backEnabled === 'boolean',
+        'CONFIG_BACK_ENABLED'
+      );
+    }
+
     map.forEach(function (step) {
       (step.options || [{next: step.next}]).forEach(function (option) {
         assert(
@@ -399,14 +409,8 @@
     }
 
     assert(
-
-
-      ['framework','unbounce-dialog'].includes(c.success.presentation || 'framework'),
-
-
+      !c.success.presentation || c.success.presentation === 'unbounce-dialog',
       'CONFIG_SUCCESS_PRESENTATION'
-
-
     );
 
 
