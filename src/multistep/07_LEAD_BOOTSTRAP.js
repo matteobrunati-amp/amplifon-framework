@@ -1,4 +1,4 @@
-﻿/* ============================================================================
+/* ============================================================================
  * 08 â€” LEAD + BOOTSTRAP
  * Un solo tentativo, un solo successo logico.
  * UI, attribution, tracking e trasporto Unbounce restano separati.
@@ -29,109 +29,6 @@
   let bootstrapProblem = null;
 
   let controller = new AbortController();
-
-  const confirmationFrames = new Map();
-
-  function confirmationAsset(source) {
-    if (!source) return '';
-    if (/^https:\/\//i.test(String(source))) {
-      const absolute = U.safeUrl(source);
-      return absolute ? absolute.toString() : '';
-    }
-    if (!c || !c.assets || !c.assets.repositoryBase) return '';
-    const resolved = U.safeUrl(source, c.assets.repositoryBase);
-    return resolved ? resolved.toString() : '';
-  }
-
-  function confirmationMessage(nonce) {
-    return {
-      type: 'amp:confirmation-confirmed',
-      version: 1,
-      nonce: nonce,
-      attemptId: attempt.id,
-      heading: c.copy.successHeading,
-      text: c.copy.successText,
-      subtext: c.copy.successSubtext || '',
-      lead: c.copy.successLead || '',
-      stepsHeading: c.copy.successStepsHeading || '',
-      successSteps: Array.isArray(c.copy.successSteps) ? c.copy.successSteps : [],
-      reminderHeading: c.copy.successReminderHeading || '',
-      reminderText: c.copy.successReminderText || '',
-      logo: confirmationAsset(c.assets.logo),
-      lang: c.page.htmlLang,
-      redirecting: !!(c.success.redirectUrl && c.runtime.mode === 'live'),
-      redirectDelayMs: c.success.redirectDelayMs
-    };
-  }
-
-  function sendConfirmations() {
-    if (!attempt || attempt.status !== 'succeeded') return;
-
-    confirmationFrames.forEach(function (entry, source) {
-      if (Date.now() - entry.time > 20000) {
-        confirmationFrames.delete(source);
-        return;
-      }
-
-      try {
-        source.postMessage(
-          confirmationMessage(entry.nonce),
-          w.location.origin
-        );
-      } catch (_) {
-        /* Nessun retry di lead. */
-      }
-    });
-  }
-
-  function onConfirmationRequest(event) {
-    if (
-      !c.success.allowNativeConfirmationHandshake ||
-      event.origin !== w.location.origin ||
-      event.source === w
-    ) {
-      return;
-    }
-
-    const message = event.data;
-
-    if (
-      !message ||
-      message.type !== 'amp:confirmation-ready' ||
-      message.version !== 1 ||
-      typeof message.nonce !== 'string' ||
-      !/^[\w-]{8,100}$/.test(message.nonce)
-    ) {
-      return;
-    }
-
-    const childFrame = Array.from(
-      d.querySelectorAll('iframe')
-    ).some(function (frame) {
-      return frame.contentWindow === event.source;
-    });
-
-    if (
-      !childFrame ||
-      !attempt ||
-      (
-        confirmationFrames.size >= 4 &&
-        !confirmationFrames.has(event.source)
-      )
-    ) {
-      return;
-    }
-
-    confirmationFrames.set(
-      event.source,
-      {
-        nonce: message.nonce,
-        time: Date.now()
-      }
-    );
-
-    sendConfirmations();
-  }
 
   function before(id) {
     if (
@@ -205,13 +102,9 @@
     trackTaboolaLead(attempt);
     ui.setStatus('succeeded');
 
-    if ((c.success.presentation || 'framework') === 'framework') {
-      ui.showSuccess();
-    }
 
     engine.cleanAfterSuccess();
 
-    sendConfirmations();
 
     cleanupTimer = setTimeout(function () {
       if (
@@ -558,7 +451,7 @@
         back: engine.back,
 
         /*
-         * CTA esplicita "JETZT STARTEN":
+         * CTA finale / restart:
          * torna al questionario e SOLO QUI Ã¨ ammesso lo scroll.
          */
         start: function () {
@@ -580,13 +473,6 @@
 
       state = 'ready';
 
-      w.addEventListener(
-        'message',
-        onConfirmationRequest,
-        {
-          signal: controller.signal
-        }
-      );
 
       w.addEventListener(
         'amp:consent-changed',
@@ -635,11 +521,15 @@
       bootstrapProblem = error.message;
 
       const message =
-        c && c.copy
-          ? c.copy.errors.configuration
-          : 'Die Seite konnte nicht geladen werden.';
+        c &&
+        c.copy &&
+        c.copy.errors &&
+        c.copy.errors.configuration
+          ? String(c.copy.errors.configuration)
+          : '';
 
       if (
+        message &&
         !d.getElementById(
           c && c.runtime
             ? c.runtime.rootId
@@ -753,7 +643,6 @@
       ui.destroy();
     }
 
-    confirmationFrames.clear();
 
     attempt = null;
     state = 'idle';

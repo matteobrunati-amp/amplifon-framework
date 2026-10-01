@@ -1,4 +1,4 @@
-﻿/* 05 â€” RENDERER. Tutto il markup visibile nasce dalla CONFIG, non dal DOM legacy. */
+/* 05 â€” RENDERER. Tutto il markup visibile nasce dalla CONFIG, non dal DOM legacy. */
 (function (w, d) {
   'use strict';
 
@@ -32,15 +32,6 @@
       {
         'data-amp-view': 'contact',
         class: 'amp-contact amp-shell',
-        hidden: true
-      }
-    );
-
-    const successView = N(
-      'section',
-      {
-        'data-amp-view': 'success',
-        class: 'amp-confirmation amp-shell',
         hidden: true
       }
     );
@@ -882,27 +873,7 @@
         )
       );
 
-      successView.append(
-        N(
-          'h1',
-          {
-            tabindex: '-1',
-            text: c.copy.successHeading
-          }
-        ),
-        N(
-          'p',
-          {
-            text: c.copy.successText
-          }
-        )
-      );
-
-      content.append(
-        quizView,
-        contactView,
-        successView
-      );
+      content.append(quizView, contactView);
 
       const footer = N(
         'footer',
@@ -995,6 +966,11 @@
             );
           }
 
+          if (action === 'back') {
+            actions.back &&
+            actions.back();
+          }
+
           /*
            * Nessuno scroll automatico.
            * La posizione della viewport rimane sotto controllo dell'utente.
@@ -1066,16 +1042,40 @@
 
       quizView.hidden = false;
       contactView.hidden = true;
-      successView.hidden = true;
 
       stepCard.replaceChildren();
 
-      const nav = N(
-        'div',
-        {
-          class: 'amp-step-top'
-        }
+      const backEnabled = !!(
+        c.funnel &&
+        c.funnel.navigation &&
+        c.funnel.navigation.backEnabled === true
       );
+
+      if (
+        backEnabled &&
+        Array.isArray(state.path) &&
+        state.path.length > 1
+      ) {
+        stepCard.append(
+          N(
+            'div',
+            {
+              class: 'amp-step-top'
+            },
+            [
+              N(
+                'button',
+                {
+                  type: 'button',
+                  class: 'amp-back',
+                  'data-amp-action': 'back',
+                  text: c.copy.back
+                }
+              )
+            ]
+          )
+        );
+      }
 
       const heading = N(
         'h2',
@@ -1087,7 +1087,6 @@
       );
 
       stepCard.append(
-        nav,
         N(
           'div',
           {
@@ -1318,7 +1317,6 @@
 
       quizView.hidden = true;
       contactView.hidden = false;
-      successView.hidden = true;
 
       if (focus) {
         safeFocus(
@@ -1422,18 +1420,6 @@
       );
     }
 
-    function showSuccess() {
-      quizView.hidden = true;
-      contactView.hidden = true;
-      successView.hidden = false;
-
-      safeFocus(
-        successView.querySelector('h1')
-      );
-
-      form.reset();
-    }
-
     function destroy() {
       signalOwner.abort();
       root.remove();
@@ -1461,7 +1447,6 @@
       getContact: getContact,
       setErrors: setErrors,
       setStatus: setStatus,
-      showSuccess: showSuccess,
       destroy: destroy
     };
   }
