@@ -10,6 +10,7 @@
   function create(c) {
     const N = U.node;
     const signalOwner = new AbortController();
+    const countdown = App.modules.countdown.create(c.countdown);
 
     let actions = {};
     let current = null;
@@ -595,7 +596,7 @@
         {
           class: 'amp-hero-copy'
         },
-        heroChildren
+        heroChildren.concat(countdown.view('header'))
       );
 
       const heroInner = N(
@@ -772,6 +773,8 @@
         ]
       );
 
+      right.append(countdown.view('contact') || '');
+
       form.append(
         N(
           'p',
@@ -922,6 +925,7 @@
 
       d.body.append(root);
       d.body.classList.add('amp-page-active');
+      countdown.start();
 
       d.documentElement.lang = c.page.htmlLang;
       d.title = c.page.title;
@@ -1422,6 +1426,7 @@
 
     function destroy() {
       signalOwner.abort();
+      countdown.destroy();
       root.remove();
 
       d.body.classList.remove(

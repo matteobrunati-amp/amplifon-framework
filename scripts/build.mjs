@@ -12,6 +12,7 @@ const orderedModules = [
   '01B_MARKET_VALIDATION.js',
   '02_TRACKING.js',
   '03_ATTRIBUTION.js',
+  '03A_COUNTDOWN.js',
   '04_RENDERER.js',
   '05_MULTISTEP_ENGINE.js',
   '06_UNBOUNCE_BRIDGE.js',

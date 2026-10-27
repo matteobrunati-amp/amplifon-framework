@@ -252,11 +252,17 @@
       'funnel',
       'copy',
       'reviews',
-      'conversions'];
+      'conversions',
+      'countdown'];
 
     Object.keys(c).forEach(function (key) {
       assert(topKeys.includes(key), 'CONFIG_UNKNOWN_KEY:' + key);
     });
+
+    if (c.countdown != null) {
+      assert(App.modules.countdown, 'MODULE_MISSING:countdown');
+      App.modules.countdown.validate(c.countdown);
+    }
 
     const consentMode = c.tracking.consentMode || 'reader';
     const contactDataMode = c.tracking.contactDataMode || 'reader';
