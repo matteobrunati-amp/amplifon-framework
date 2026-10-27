@@ -176,6 +176,14 @@ body {
     box-shadow: 0 4px 9px rgba(0, 0, 0, .16) !important;
   }
 
+  .amp-app .amp-countdown--header {
+    max-width: none;
+  }
+
+  .amp-app .amp-quiz-shell:has(> .amp-countdown--header:not([hidden])) {
+    padding-top: 0 !important;
+  }
+
   .amp-question-heading {
     display: flex !important;
     align-items: center !important;
@@ -476,6 +484,11 @@ body {
     border-radius: 16px !important;
     background: #fff !important;
     box-shadow: 0 4px 9px rgba(0, 0, 0, .17) !important;
+  }
+
+  .amp-app .amp-countdown--header {
+    max-width: 330px;
+    margin-bottom: 18px;
   }
 
   .amp-question-heading {

@@ -76,6 +76,11 @@ Le immagini non appartengono a questo repository. Sono servite dal repository Gi
 
 - `docs/ARCHITETTURA.md`
 - `docs/INSTALLAZIONE_UNBOUNCE.md`
+- `docs/COUNTDOWN.md` — settings del countdown opzionale dalla v1.1.0
+
+## Dalla v1.1.0: countdown configurabile
+
+Il PAGE CONFIG può abilitare un countdown con scadenza fissa o durata dalla visita, testi localizzati, soglia di urgenza e visibilità indipendente nella vista questionario e nel form. Il componente è disattivato in assenza di configurazione e non modifica submit o tracking. Per settings e adozione della release vedere `docs/COUNTDOWN.md`.
 
 ## Dalla v1.0.13: confirmation nativa e separazione contenuti
 

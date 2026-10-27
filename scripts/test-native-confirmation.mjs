@@ -57,7 +57,8 @@ vm.runInNewContext(
   {window: forbidden, document: forbidden}
 );
 
-const bundle = fs.readFileSync('dist/1.0.13/amplifon-multistep.js', 'utf8');
+const {version} = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+const bundle = fs.readFileSync(`dist/${version}/amplifon-multistep.js`, 'utf8');
 assert.equal(/confirmation-ready|amp:confirmation-confirmed|showSuccess/.test(bundle), false);
 
 console.log('native confirmation, success dedupe, tracking and redirect checks: OK');
