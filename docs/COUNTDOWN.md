@@ -13,7 +13,7 @@ countdown: {
   endsAt: '2026-10-31T23:59:59+01:00', // scadenza con fuso orario esplicito
   durationSeconds: 1800,          // usato solo con mode: 'duration' (30 minuti)
   placements: {
-    header: true,                // banner nella parte iniziale del questionario
+    header: true,                // banner centrato, largo quanto il box della domanda
     contact: true                // banner compatto sopra il form di contatto
   },
   urgentThresholdSeconds: 172800, // testi urgenti nelle ultime 48 ore; 0 = disabilitati

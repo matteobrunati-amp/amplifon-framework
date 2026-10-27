@@ -596,7 +596,7 @@
         {
           class: 'amp-hero-copy'
         },
-        heroChildren.concat(countdown.view('header'))
+        heroChildren
       );
 
       const heroInner = N(
@@ -632,6 +632,7 @@
           class: 'amp-shell amp-quiz-shell'
         },
         [
+          countdown.view('header'),
           stepCard,
           featureList(
             c.copy.features,
