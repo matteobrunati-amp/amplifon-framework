@@ -902,7 +902,8 @@ body {
     font-weight: 700 !important;
   }
 
-  .amp-form-card .amp-field input {
+  .amp-form-card .amp-field input,
+  .amp-form-card .amp-field select {
     width: 100% !important;
     min-height: 46px !important;
     padding: 9px 10px !important;
@@ -1116,7 +1117,8 @@ body {
     font-size: 14px !important;
   }
 
-  .amp-form-card .amp-field input {
+  .amp-form-card .amp-field input,
+  .amp-form-card .amp-field select {
     min-height: 42px !important;
     height: 42px !important;
     padding: 7px 9px !important;

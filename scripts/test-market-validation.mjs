@@ -3,7 +3,7 @@ import vm from 'node:vm';
 import path from 'node:path';
 
 const root = process.cwd();
-const modulePath = path.join(root, 'src', 'multistep', '01B_MARKET_VALIDATION.js');
+const modulesPath = path.join(root, 'src', 'multistep');
 
 function makeConfig(phoneMode = 'country', postcodeMode = 'country') {
   return {
@@ -50,22 +50,13 @@ function makeConfig(phoneMode = 'country', postcodeMode = 'country') {
 
 function load(pathname, phoneMode = 'country', postcodeMode = 'country') {
   const config = makeConfig(phoneMode, postcodeMode);
-  const U = {
-    clean(value) {
-      return String(value == null ? '' : value).trim().replace(/\s+/g, ' ');
-    },
-    phone() {
-      return null;
-    }
-  };
-
-  const App = {modules: {utils: U}};
+  const App = {modules: {}};
   const document = {
     documentElement: null,
     getElementById() { return null; }
   };
   const window = {
-    location: {pathname},
+    location: {pathname, href: 'https://example.test' + pathname},
     AMPLIFON_CONFIG: config,
     AmplifonApp: App
   };
@@ -78,15 +69,20 @@ function load(pathname, phoneMode = 'country', postcodeMode = 'country') {
     Set,
     Object,
     RegExp,
-    String
+    String,
+    URL,
+    URLSearchParams
   };
 
   vm.createContext(sandbox);
-  vm.runInContext(fs.readFileSync(modulePath, 'utf8'), sandbox);
+  for (const file of ['01_UTILS.js', '01B_MARKET_VALIDATION.js', '03_ATTRIBUTION.js']) {
+    vm.runInContext(fs.readFileSync(path.join(modulesPath, file), 'utf8'), sandbox);
+  }
 
   return {
     config,
-    U,
+    U: App.modules.utils,
+    attribution: App.modules.attribution,
     M: App.modules.marketValidation
   };
 }
@@ -138,6 +134,53 @@ function ok(condition, label) {
   const zip = M.normalizePostcode('sw1a1aa', rules);
   equal(zip, 'SW1A 1AA', 'UK postcode normalize');
   ok(rules.pattern.test(zip), 'UK postcode valid');
+}
+
+{
+  const {config, U} = load('/ar/test/');
+  config.form.extraFields = [
+    {key: 'phone_type', options: [{value: 'fijo', label: 'Fijo'}]},
+    {key: 'area_code', pattern: '^(0)?[0-9]{2,3}$', patternError: 'area'},
+    {key: 'city'}
+  ];
+  config.form.required.push('phone_type', 'area_code', 'city');
+  config.form.phoneAdapter = {
+    normalize(values) {
+      return values.localPhoneNumber ? '+54' + values.area_code + values.localPhoneNumber : null;
+    },
+    nativeValue(values) {
+      return values.area_code + ' - ' + values.localPhoneNumber;
+    }
+  };
+  const raw = {phone_type: 'fijo', area_code: ' 11 ', phone_number: ' 45678901 ', city: ' Buenos Aires '};
+  const values = U.normalize(raw, config);
+  equal(values.phone_number, '+541145678901', 'split phone canonical value');
+  equal(values.localPhoneNumber, '45678901', 'split phone retains local digits for native field');
+  equal(config.form.phoneAdapter.nativeValue(values), '11 - 45678901', 'split phone native value');
+  equal(values.city, 'Buenos Aires', 'extra city is normalized');
+  const invalid = U.normalize({...raw, phone_type: 'unknown', area_code: 'invalid', city: ''}, config);
+  const errors = U.validate(invalid, config);
+  equal(errors.phone_type, config.copy.errors.required, 'unknown select value');
+  equal(errors.area_code, 'area', 'extra field pattern');
+  equal(errors.city, config.copy.errors.required, 'required extra field');
+}
+
+{
+  const {config, attribution} = load('/ar/test/');
+  config.form.attributionFields = {mci: 'mci'};
+  config.attribution = {
+    allowedParams: ['mci'],
+    maxLength: 120,
+    fallbackMci: 'default_value',
+    ignoredValues: {mci: ['default_value']},
+    updateUrl: false
+  };
+  const placeholder = attribution.create(config, '?mci=default_value');
+  placeholder.useNative(() => 'default_value');
+  equal(placeholder.snapshot().mci, undefined, 'placeholder absent from URL, native and fallback');
+  const campaign = attribution.create(config, '?mci=campaign-test');
+  campaign.useNative(() => 'default_value');
+  equal(campaign.snapshot().mci, 'campaign-test', 'URL campaign takes precedence');
 }
 
 console.log('market validation tests: OK');

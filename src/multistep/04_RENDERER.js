@@ -328,7 +328,7 @@
       return list;
     }
 
-    function field(key, type, autocomplete) {
+    function field(key, type, autocomplete, extra = {}) {
       const required = c.form.required.includes(key);
       const id = 'amp-field-' + key;
 
@@ -343,26 +343,31 @@
       );
 
       const input = N(
-        'input',
+        extra.options ? 'select' : 'input',
         {
           id: id,
-          type: type,
+          type: extra.options ? undefined : type,
           'data-amp-field': key,
           autocomplete: autocomplete,
+          inputmode: extra.inputMode || (key === 'phone_number' ? 'tel' : undefined),
           required: required,
-          placeholder: c.copy.placeholders[key],
+          placeholder: extra.options ? undefined : c.copy.placeholders[key],
           'aria-describedby': id + '-error',
-          maxlength:
+          maxlength: extra.options ? undefined : extra.maxLength || (
             key === 'email'
               ? 254
               : key === 'phone_number'
                 ? 40
                 : c.validation.nameMaxLength
+          )
         }
       );
 
-      if (key === 'phone_number') {
-        input.setAttribute('inputmode', 'tel');
+      if (extra.options) {
+        extra.options.forEach(function (option) {
+          input.append(N('option', {value: option.value, text: option.label}));
+        });
+        if (extra.defaultValue != null) input.value = extra.defaultValue;
       }
 
       const error = N(
@@ -810,6 +815,11 @@
         )
       );
 
+      const extraFields = c.form.extraFields || [];
+      extraFields.filter(item => !item.afterPhone).forEach(function (item) {
+        form.append(field(item.key, 'text', item.autocomplete, item));
+      });
+
       form.append(
         field(
           'phone_number',
@@ -817,6 +827,10 @@
           'tel'
         )
       );
+
+      extraFields.filter(item => item.afterPhone).forEach(function (item) {
+        form.append(field(item.key, 'text', item.autocomplete, item));
+      });
 
       form.append(
         consentField(
@@ -826,13 +840,15 @@
         )
       );
 
-      form.append(
-        consentField(
-          'marketing_flag',
-          c.copy.marketingHeading,
-          c.copy.marketingText
-        )
-      );
+      if (!c.form.hideMarketing) {
+        form.append(
+          consentField(
+            'marketing_flag',
+            c.copy.marketingHeading,
+            c.copy.marketingText
+          )
+        );
+      }
 
       form.append(
         N(
@@ -850,17 +866,12 @@
             class: 'amp-submit-note',
             text: c.copy.submitNote
           }
-        ),
-        c.copy.legalNotice
-          ? N(
-              'p',
-              {
-                class: 'amp-legal-notice',
-                text: c.copy.legalNotice
-              }
-            )
-          : null
+        )
       );
+
+      if (c.copy.legalNotice) {
+        form.append(N('p', { class: 'amp-legal-notice', text: c.copy.legalNotice }));
+      }
 
       right.append(form);
 

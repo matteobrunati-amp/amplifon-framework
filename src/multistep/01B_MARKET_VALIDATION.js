@@ -382,17 +382,17 @@
 
   function normalize(values, config) {
     const pr = postcodeRules(config);
-    return {
+    return U.normalizeContactFields({
       first_name: U.clean(values.first_name),
       last_name: U.clean(values.last_name),
       email: String(values.email || '').trim(),
-      phone_number: normalizePhone(values.phone_number, config),
+      phone_number: config.form.phoneAdapter ? null : normalizePhone(values.phone_number, config),
       zipcode: enabled(config, 'postcode')
         ? normalizePostcode(values.zipcode, pr)
         : String(values.zipcode || '').trim(),
       privacy_flag: values.privacy_flag === true,
       marketing_flag: values.marketing_flag === true
-    };
+    }, values, config);
   }
 
   function validate(values, config) {
@@ -434,7 +434,7 @@
       errors.privacy_flag = config.copy.errors.privacy;
     }
 
-    return errors;
+    return U.validateContactFields(errors, values, config);
   }
 
   function attachPostcodeUx() {

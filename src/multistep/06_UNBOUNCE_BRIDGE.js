@@ -127,7 +127,11 @@
     function sync(values, attribution) {
       Object.entries(c.form.fields).forEach(function ([key, name]) {
         let value = values[key];
-        if (key === 'phone_number') value = U.phoneFor(value, c.form.phoneFormat, c.validation);
+        if (key === 'phone_number') {
+          value = c.form.phoneAdapter
+            ? c.form.phoneAdapter.nativeValue(values)
+            : U.phoneFor(value, c.form.phoneFormat, c.validation);
+        }
         if (key === 'privacy_flag' || key === 'marketing_flag') {
           if (c.form.checkboxNames[key]) write(c.form.checkboxNames[key], value === true, true);
           value = value === true ? c.form.consentTrue : c.form.consentFalse;

@@ -27,12 +27,13 @@
         : sourceSearch
     );
 
-    function allowed(value) {
+    function allowed(value, key) {
       return (
         typeof value === 'string' &&
         value.length > 0 &&
         value.length <= c.attribution.maxLength &&
-        !/[\u0000-\u001f\u007f]/.test(value)
+        !/[\u0000-\u001f\u007f]/.test(value) &&
+        !c.attribution.ignoredValues?.[key]?.includes(value)
       );
     }
 
@@ -43,7 +44,7 @@
     c.attribution.allowedParams.forEach(function (key) {
       const value = input.get(key);
 
-      if (allowed(value)) {
+      if (allowed(value, key)) {
         values[key] = value;
         origins[key] = 'url';
       }
@@ -56,7 +57,7 @@
 
           const value = read(fieldName);
 
-          if (allowed(value)) {
+          if (allowed(value, key)) {
             values[key] = value;
             origins[key] = 'native';
           }
@@ -65,7 +66,7 @@
 
       if (
         !values.mci &&
-        allowed(c.attribution.fallbackMci)
+        allowed(c.attribution.fallbackMci, 'mci')
       ) {
         values.mci = c.attribution.fallbackMci;
         origins.mci = 'config';
@@ -113,7 +114,7 @@
     }
 
     function interaction(icmp) {
-      if (!allowed(icmp)) return false;
+      if (!allowed(icmp, 'icmp')) return false;
 
       values.icmp = icmp;
       origins.icmp = 'interaction';
