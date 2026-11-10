@@ -99,8 +99,10 @@
      * Viene eseguita SOLO dopo il successo reale del lead.
      * Non passa da Adobe Launch e non genera Meta Lead.
      */
-    trackTaboolaLead(attempt);
-    ui.setStatus('succeeded');
+    if (c.runtime.mode === 'live') {
+      trackTaboolaLead(attempt);
+    }
+    ui.setStatus('succeeded', c.runtime.mode === 'preview' ? c.copy.previewSuccess : undefined);
 
 
     engine.cleanAfterSuccess();
@@ -484,17 +486,20 @@
         }
       );
 
-      if (c.runtime.mode !== 'preview') {
-        bridge =
-          App.modules.unbounce.create(
-            c,
-            {
-              before: before,
-              success: succeeded,
-              failure: failed,
-              unknown: unknown
-            }
-          );
+      bridge =
+        App.modules.unbounce.create(
+          c,
+          {
+            before: before,
+            success: succeeded,
+            failure: failed,
+            unknown: unknown
+          }
+        );
+
+      if (c.runtime.mode === 'preview') {
+        bridge.hideNativeRoot();
+      } else {
 
         try {
           await bridge.init();
@@ -591,7 +596,7 @@
           },
 
       native:
-        bridge
+        bridge && c.runtime.mode !== 'preview'
           ? bridge.inspect()
           : {
             ready:
@@ -637,6 +642,7 @@
 
     if (bridge) {
       bridge.destroy();
+      bridge = null;
     }
 
     if (ui) {

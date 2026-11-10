@@ -3528,10 +3528,14 @@
       });
     }
 
+    function hideNativeRoot() {
+      const nativeRoot = c.runtime.nativeRootSelector ? d.querySelector(c.runtime.nativeRootSelector) : null;
+      if (nativeRoot && !nativeRoot.contains(d.getElementById(c.runtime.rootId))) hide(nativeRoot);
+    }
+
     async function init() {
       // Nasconde subito la sola struttura nativa: non attende Adobe o gli hook.
-      const initialRoot = c.runtime.nativeRootSelector ? d.querySelector(c.runtime.nativeRootSelector) : null;
-      if (initialRoot && !initialRoot.contains(d.getElementById(c.runtime.rootId))) hide(initialRoot);
+      hideNativeRoot();
       const result = await U.waitFor(locate, c.runtime.dependencyTimeoutMs, lifetime.signal);
       form = result.form; wrapper = result.wrapper; button = result.button; hooks = result.hooks;
       beforeHook = function (args) {
@@ -3656,7 +3660,7 @@
       ready = false;
     }
     const api = {
-      init, submit, inspect, clearPersonal, destroy,
+      init, hideNativeRoot, submit, inspect, clearPersonal, destroy,
       readTechnical: name => { const input = form && findField(form, name); return input ? input.value : ''; },
       setProblem: code => { problem = code; }
     };
@@ -3767,8 +3771,10 @@
      * Viene eseguita SOLO dopo il successo reale del lead.
      * Non passa da Adobe Launch e non genera Meta Lead.
      */
-    trackTaboolaLead(attempt);
-    ui.setStatus('succeeded');
+    if (c.runtime.mode === 'live') {
+      trackTaboolaLead(attempt);
+    }
+    ui.setStatus('succeeded', c.runtime.mode === 'preview' ? c.copy.previewSuccess : undefined);
 
 
     engine.cleanAfterSuccess();
@@ -4152,17 +4158,20 @@
         }
       );
 
-      if (c.runtime.mode !== 'preview') {
-        bridge =
-          App.modules.unbounce.create(
-            c,
-            {
-              before: before,
-              success: succeeded,
-              failure: failed,
-              unknown: unknown
-            }
-          );
+      bridge =
+        App.modules.unbounce.create(
+          c,
+          {
+            before: before,
+            success: succeeded,
+            failure: failed,
+            unknown: unknown
+          }
+        );
+
+      if (c.runtime.mode === 'preview') {
+        bridge.hideNativeRoot();
+      } else {
 
         try {
           await bridge.init();
@@ -4259,7 +4268,7 @@
           },
 
       native:
-        bridge
+        bridge && c.runtime.mode !== 'preview'
           ? bridge.inspect()
           : {
             ready:
@@ -4305,6 +4314,7 @@
 
     if (bridge) {
       bridge.destroy();
+      bridge = null;
     }
 
     if (ui) {
