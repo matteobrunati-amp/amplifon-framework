@@ -179,16 +179,47 @@
     return value;
   }
 
+  function normalizeContactFields(result, values, config) {
+    (config.form.extraFields || []).forEach(function (field) {
+      result[field.key] = clean(values[field.key]);
+    });
+
+    if (config.form.phoneAdapter) {
+      result.localPhoneNumber = clean(values.phone_number);
+      result.phone_number = config.form.phoneAdapter.normalize(result);
+    }
+
+    return result;
+  }
+
+  function validateContactFields(errors, values, config) {
+    (config.form.extraFields || []).forEach(function (field) {
+      const value = values[field.key];
+
+      if (!value) {
+        if (config.form.required.includes(field.key)) errors[field.key] = config.copy.errors.required;
+      } else if (
+        (field.options && !field.options.some(option => option.value === value)) ||
+        (field.maxLength && value.length > field.maxLength) ||
+        (field.pattern && !new RegExp(field.pattern, 'u').test(value))
+      ) {
+        errors[field.key] = field.patternError || config.copy.errors.required;
+      }
+    });
+
+    return errors;
+  }
+
   function normalize(values, config) {
-    return {
+    return normalizeContactFields({
       first_name: clean(values.first_name),
       last_name: clean(values.last_name),
       email: String(values.email || '').trim(),
-      phone_number: phone(values.phone_number, config.validation),
+      phone_number: config.form.phoneAdapter ? null : phone(values.phone_number, config.validation),
       zipcode: String(values.zipcode || '').trim(),
       privacy_flag: values.privacy_flag === true,
       marketing_flag: values.marketing_flag === true
-    };
+    }, values, config);
   }
 
   function validate(values, config) {
@@ -227,7 +258,7 @@
       errors.privacy_flag = config.copy.errors.privacy;
     }
 
-    return errors;
+    return validateContactFields(errors, values, config);
   }
 
   function validateConfig(c) {
@@ -376,6 +407,39 @@
       assert(key in c.form.fields, 'CONFIG_REQUIRED_MAPPING');
     });
 
+    const fieldKeys = new Set(['first_name', 'last_name', 'email', 'phone_number', 'zipcode', 'privacy_flag', 'marketing_flag', 'localPhoneNumber']);
+    const extraFields = c.form.extraFields || [];
+    assert(Array.isArray(extraFields), 'CONFIG_CONTACT_FIELDS');
+    extraFields.forEach(function (field) {
+      assert(field && /^[a-z][a-z0-9_]*$/.test(field.key) && !fieldKeys.has(field.key), 'CONFIG_CONTACT_FIELD_KEY');
+      assert(Object.prototype.hasOwnProperty.call(c.form.fields, field.key), 'CONFIG_CONTACT_FIELD_MAPPING');
+      assert(typeof c.copy.labels[field.key] === 'string' && c.copy.labels[field.key].trim(), 'CONFIG_CONTACT_FIELD_LABEL');
+      if (field.options) {
+        assert(Array.isArray(field.options) && field.options.length > 0, 'CONFIG_CONTACT_FIELD_OPTIONS');
+        const options = new Set();
+        field.options.forEach(function (option) {
+          assert(option && typeof option.value === 'string' && !options.has(option.value) && typeof option.label === 'string', 'CONFIG_CONTACT_FIELD_OPTION');
+          options.add(option.value);
+        });
+        assert(field.defaultValue == null || options.has(field.defaultValue), 'CONFIG_CONTACT_FIELD_DEFAULT');
+      }
+      if (field.pattern != null) new RegExp(field.pattern, 'u');
+      fieldKeys.add(field.key);
+    });
+
+    if (c.form.phoneAdapter) {
+      assert(typeof c.form.phoneAdapter.normalize === 'function', 'CONFIG_PHONE_ADAPTER_NORMALIZE');
+      assert(typeof c.form.phoneAdapter.nativeValue === 'function', 'CONFIG_PHONE_ADAPTER_NATIVE_VALUE');
+    }
+
+    if (c.form.hideMarketing) {
+      assert(!c.form.required.includes('marketing_flag'), 'CONFIG_HIDDEN_MARKETING_REQUIRED');
+    }
+
+    Object.entries(c.attribution.ignoredValues || {}).forEach(function ([key, values]) {
+      assert(c.attribution.allowedParams.includes(key) && Array.isArray(values) && values.every(value => typeof value === 'string'), 'CONFIG_IGNORED_ATTRIBUTION');
+    });
+
     Object.keys(c.form.technicalValues).forEach(function (key) {
       assert(
         c.form.technicalAllowlist.includes(key),
@@ -473,6 +537,8 @@
     safeUrl,
     phone,
     phoneFor,
+    normalizeContactFields,
+    validateContactFields,
     normalize,
     validate,
     validateConfig,

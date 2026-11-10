@@ -68,10 +68,14 @@
       });
     }
 
+    function hideNativeRoot() {
+      const nativeRoot = c.runtime.nativeRootSelector ? d.querySelector(c.runtime.nativeRootSelector) : null;
+      if (nativeRoot && !nativeRoot.contains(d.getElementById(c.runtime.rootId))) hide(nativeRoot);
+    }
+
     async function init() {
       // Nasconde subito la sola struttura nativa: non attende Adobe o gli hook.
-      const initialRoot = c.runtime.nativeRootSelector ? d.querySelector(c.runtime.nativeRootSelector) : null;
-      if (initialRoot && !initialRoot.contains(d.getElementById(c.runtime.rootId))) hide(initialRoot);
+      hideNativeRoot();
       const result = await U.waitFor(locate, c.runtime.dependencyTimeoutMs, lifetime.signal);
       form = result.form; wrapper = result.wrapper; button = result.button; hooks = result.hooks;
       beforeHook = function (args) {
@@ -127,7 +131,11 @@
     function sync(values, attribution) {
       Object.entries(c.form.fields).forEach(function ([key, name]) {
         let value = values[key];
-        if (key === 'phone_number') value = U.phoneFor(value, c.form.phoneFormat, c.validation);
+        if (key === 'phone_number') {
+          value = c.form.phoneAdapter
+            ? c.form.phoneAdapter.nativeValue(values)
+            : U.phoneFor(value, c.form.phoneFormat, c.validation);
+        }
         if (key === 'privacy_flag' || key === 'marketing_flag') {
           if (c.form.checkboxNames[key]) write(c.form.checkboxNames[key], value === true, true);
           value = value === true ? c.form.consentTrue : c.form.consentFalse;
@@ -192,7 +200,7 @@
       ready = false;
     }
     const api = {
-      init, submit, inspect, clearPersonal, destroy,
+      init, hideNativeRoot, submit, inspect, clearPersonal, destroy,
       readTechnical: name => { const input = form && findField(form, name); return input ? input.value : ''; },
       setProblem: code => { problem = code; }
     };

@@ -676,6 +676,7 @@ body.amp-page-active {
 }
 
 .amp-field input,
+.amp-field select,
 .amp-postcode-form input {
   appearance: none;
   display: block;
@@ -691,12 +692,18 @@ body.amp-page-active {
   box-shadow: none;
 }
 
-.amp-field input:disabled {
+.amp-field select {
+  appearance: auto;
+}
+
+.amp-field input:disabled,
+.amp-field select:disabled {
   background: #f7f7f7;
   color: #666;
 }
 
 .amp-field input[aria-invalid="true"],
+.amp-field select[aria-invalid="true"],
 .amp-postcode-form input[aria-invalid="true"] {
   border: 2px solid var(--amp-brand);
 }
@@ -1460,6 +1467,7 @@ body.amp-page-active {
   }
 
   .amp-field input,
+  .amp-field select,
   .amp-postcode-form input {
     height: 56px;
     padding: 12px 14px;
