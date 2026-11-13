@@ -1,0 +1,26 @@
+name: Standalone TYP check
+
+on:
+  pull_request:
+    paths:
+      - src/typ/**
+      - dist/typ/**
+      - scripts/test-standalone-typ.mjs
+      - .github/workflows/standalone-typ-check.yml
+
+permissions:
+  contents: read
+
+jobs:
+  standalone-typ-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/test-standalone-typ.mjs
+      - name: Verify published files match source
+        run: |
+          cmp src/typ/amplifon-typ.js dist/typ/1.0.0/amplifon-typ.js
+          cmp src/typ/amplifon-typ.css dist/typ/1.0.0/amplifon-typ.css
