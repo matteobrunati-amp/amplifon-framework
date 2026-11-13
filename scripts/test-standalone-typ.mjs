@@ -25,8 +25,15 @@ function runtime(overrides = {}) {
   const nodes = [];
   function node(tag) {
     const attributes = new Map();
+    const styleValues = new Map();
     const element = {
-      tag, children: [], style: {setProperty() {}}, classList: {add() {}},
+      tag, children: [],
+      style: {
+        setProperty(key, value, priority) { styleValues.set(key, {value, priority}); },
+        getPropertyValue: key => styleValues.get(key)?.value,
+        getPropertyPriority: key => styleValues.get(key)?.priority
+      },
+      classList: {add() {}},
       setAttribute(key, value) { attributes.set(key, value); },
       getAttribute: key => attributes.get(key),
       appendChild(child) { this.children.push(child); return child; },
@@ -71,6 +78,8 @@ preview.run();
 assert.equal(preview.window.AmplifonApp.typ.inspect().mounted, true);
 assert.equal(preview.calls.length, 0);
 assert.equal(preview.nativeRoot.hidden, true);
+assert.equal(preview.nativeRoot.style.getPropertyValue('display'), 'none');
+assert.equal(preview.nativeRoot.style.getPropertyPriority('display'), 'important');
 assert.equal(preview.errors.length, 0);
 
 const live = runtime({mode: 'live'});

@@ -142,6 +142,7 @@
       if (nativeRoot && !nativeRoot.contains(root)) {
         nativeRoot.hidden = true;
         nativeRoot.setAttribute('aria-hidden', 'true');
+        nativeRoot.style.setProperty('display', 'none', 'important');
       }
       d.body.classList.add('amp-typ-page');
       state.mounted = true;
