@@ -187,8 +187,12 @@ body.amp-typ-page {
   margin: 0 auto 18px;
 }
 
-.amp-typ-footer-brand a {
+.amp-typ .amp-typ-footer-brand a {
   color: #fff;
+}
+
+.amp-typ .amp-typ-footer-brand a:focus-visible {
+  outline-color: #fff;
 }
 
 .amp-typ a {
